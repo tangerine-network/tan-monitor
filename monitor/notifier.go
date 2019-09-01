@@ -71,7 +71,7 @@ Dear Node Operator:
 
 	Your full node "` + name + `" is fined.
 	Please pay the fine, and check your node status.
-	Also, please check https://byzantine-lab.gitlab.io/wiki/#/Rules-for-the-node-set?id=penalty for the penalty condition.
+	Also, please check https://tangerine-network.github.io/wiki/#/Rules-for-the-node-set?id=penalty for the penalty condition.
 
 	Thanks for your cooperation.
 
