@@ -45,7 +45,7 @@ func init() {
 
 // NetworkConfigMap represents the system network config mapping.
 var NetworkConfigMap = map[int64]NetworkConfig{
-	373: {
+	411: {
 		WSEndpoint:      "wss://mainnet-rpc.tangerine-network.io/ws",
 		HTTPEndpoint:    "https://mainnet-rpc.tangerine-network.io",
 		EthHTTPEndpoint: "https://mainnet.infura.io/v3/4eb07139b29d41c59b352f21c4c9f526",
