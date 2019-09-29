@@ -146,7 +146,7 @@ func (m *Monitor) checkTanBalance() {
 		nc := NetworkConfigMap[int64(m.networkID)]
 		conn, err := ethclient.Dial(nc.HTTPEndpoint)
 		if err != nil {
-			log.Println("Get Eth balance fail")
+			log.Println("Get TAN balance fail")
 			continue
 		}
 		for i := range nodes {
