@@ -90,7 +90,7 @@ func NewMonitor(networkID int, backend backendIntf, threshold string) *Monitor {
 		backend:              backend,
 		tanBalancesCache:     tanBalance,
 		ethBalancesCache:     ethBalance,
-		checkBalanceDuration: 10 * time.Minute,
+		checkBalanceDuration: 24 * time.Hour,
 		ethThresholdString:   threshold,
 		ethThreshold:         ethThreshold,
 	}
