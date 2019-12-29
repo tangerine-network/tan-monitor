@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/urfave/cli"
-	"gitlab.com/byzantine-lab/tan-monitor/monitor"
+	"github.com/tangerine-network/tan-monitor/monitor"
 )
 
 var app *cli.App
