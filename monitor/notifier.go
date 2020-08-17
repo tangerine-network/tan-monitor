@@ -32,15 +32,17 @@ type Email struct {
 	password   string
 	smtpServer string
 	ccList     string
+	skipList   []string
 }
 
 // NewEmail is the Email constructor.
-func NewEmail(sender, password, server, ccList string) Notifier {
+func NewEmail(sender, password, server, ccList string, skipList []string) Notifier {
 	e := Email{
 		sender:     sender,
 		password:   password,
 		smtpServer: server,
 		ccList:     ccList,
+		skipList:   skipList,
 	}
 	return &e
 }
@@ -48,6 +50,11 @@ func NewEmail(sender, password, server, ccList string) Notifier {
 func (e *Email) notify(n node, network string, notifyType uint, threshold string) {
 	var subj string
 	var body string
+	for _, skip := range e.skipList {
+		if(skip == n.email) {
+			return
+		}
+	}
 	switch notifyType {
 	case FINED:
 		subj = "[Notification] Your Tangerine " + network + " Network Full Node is Fined"

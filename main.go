@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"bufio"
 
 	"github.com/urfave/cli"
 	"github.com/tangerine-network/tan-monitor/monitor"
@@ -22,7 +23,20 @@ func init() {
 		commandStart,
 	}
 }
+func getLines(path string) ([]string, error) {
+    file, err := os.Open(path)
+    if err != nil {
+        return nil, err
+    }
+    defer file.Close()
 
+    var lines []string
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        lines = append(lines, scanner.Text())
+    }
+    return lines, scanner.Err()
+}
 var commandStart = cli.Command{
 	Name:      "start",
 	Usage:     "Start monitor job",
@@ -40,6 +54,11 @@ var commandStart = cli.Command{
 			Value: "./cc.txt",
 			Usage: "Path to the cc list",
 		},
+		cli.StringFlag{
+			Name:  "skipList",
+			Value: "./skip-list.txt",
+			Usage: "Path to the skip list",
+		},
 	},
 	Action: func(ctx *cli.Context) error {
 		if len(ctx.Args()) != 2 {
@@ -55,6 +74,11 @@ var commandStart = cli.Command{
 			panic(err)
 		}
 		ccList, _ := ioutil.ReadFile(ctx.String("ccList"))
+		skipList, _ := getLines(ctx.String("skipList"))
+		fmt.Println("skip list:")
+		for _, skip := range skipList {
+			fmt.Println(skip)
+		}
 		backend := monitor.NewBlockchainBackend(networkID)
 		m := monitor.NewMonitor(networkID, backend, threshold)
 		email := monitor.NewEmail(
@@ -62,6 +86,7 @@ var commandStart = cli.Command{
 			string(emailPassword),
 			"smtp-relay.gmail.com",
 			string(ccList),
+			skipList,
 		)
 		m.Register(email)
 		m.Run()
