@@ -1,16 +1,16 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
-	"bufio"
 
-	"github.com/urfave/cli"
 	"github.com/tangerine-network/tan-monitor/monitor"
+	"github.com/urfave/cli"
 )
 
 var app *cli.App
@@ -21,21 +21,39 @@ func init() {
 	app.Usage = "Tangerine Newtwork Monitor"
 	app.Commands = []cli.Command{
 		commandStart,
+		commandGetNodeStatus,
 	}
 }
 func getLines(path string) ([]string, error) {
-    file, err := os.Open(path)
-    if err != nil {
-        return nil, err
-    }
-    defer file.Close()
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
 
-    var lines []string
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        lines = append(lines, scanner.Text())
-    }
-    return lines, scanner.Err()
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
+}
+
+var commandGetNodeStatus = cli.Command{
+	Name:        "get_nodes_status",
+	Usage:       "Get nodes' status",
+	ArgsUsage:   "",
+	Description: `Print out current nodes's status`,
+	Flags:       []cli.Flag{},
+	Action: func(ctx *cli.Context) error {
+		networkID := 411
+		backend := monitor.NewBlockchainBackend(networkID)
+		nodes := backend.NodeSet()
+		for _, node := range nodes {
+			node.Print()
+		}
+		return nil
+	},
 }
 var commandStart = cli.Command{
 	Name:      "start",

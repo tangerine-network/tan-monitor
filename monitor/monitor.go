@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"fmt"
 	"log"
 	"math"
 	"math/big"
@@ -18,6 +19,15 @@ type node struct {
 	name           string
 	publicKey      []byte
 	nodeKeyAddress common.Address
+}
+
+func (n node) Print() {
+	fmt.Println("========")
+	fmt.Println(n.name)
+	fmt.Println("fined: ", n.fined)
+	fmt.Println("email: ", n.email)
+	fmt.Println("owner: ", n.owner)
+	fmt.Println("address: ", n.nodeKeyAddress)
 }
 
 // NetworkConfig represents the network config.
