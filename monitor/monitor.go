@@ -26,8 +26,8 @@ func (n node) Print() {
 	fmt.Println(n.name)
 	fmt.Println("fined: ", n.fined)
 	fmt.Println("email: ", n.email)
-	fmt.Println("owner: ", n.owner)
-	fmt.Println("address: ", n.nodeKeyAddress)
+	fmt.Println("owner: ", n.owner.Hex())
+	fmt.Println("nodekey address: ", n.nodeKeyAddress.Hex())
 }
 
 // NetworkConfig represents the network config.
